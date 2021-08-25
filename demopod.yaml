@@ -16,28 +16,14 @@ spec:
   - command:
     - mysqld
     env:
-    - name: PATH
-      value: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-    - name: TERM
-      value: xterm
-    - name: container
-      value: podman
     - name: MYSQL_DATABASE
       value: wp
-    - name: MARIADB_VERSION
-      value: 1:10.6.4+maria~focal
-    - name: GOSU_VERSION
-      value: "1.13"
     - name: MYSQL_USER
       value: wordpress
     - name: MYSQL_PASSWORD
       value: redhat
-    - name: MARIADB_MAJOR
-      value: "10.6"
     - name: MYSQL_ROOT_PASSWORD
       value: myrootpass
-    - name: HOSTNAME
-      value: demo-pod
     image: docker.io/library/mariadb:latest
     name: mydb
     ports:
@@ -55,50 +41,14 @@ spec:
   - command:
     - apache2-foreground
     env:
-    - name: PATH
-      value: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-    - name: TERM
-      value: xterm
-    - name: PHP_EXTRA_CONFIGURE_ARGS
-      value: --with-apxs2 --disable-cgi
     - name: WORDPRESS_DB_HOST
       value: 127.0.0.1
     - name: WORDPRESS_DB_NAME
       value: wp
     - name: WORDPRESS_DB_USER
       value: wordpress
-    - name: PHP_LDFLAGS
-      value: -Wl,-O1 -pie
-    - name: PHP_URL
-      value: https://www.php.net/distributions/php-7.4.22.tar.xz
-    - name: APACHE_ENVVARS
-      value: /etc/apache2/envvars
-    - name: APACHE_CONFDIR
-      value: /etc/apache2
-    - name: PHP_ASC_URL
-      value: https://www.php.net/distributions/php-7.4.22.tar.xz.asc
-    - name: PHP_CFLAGS
-      value: -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
-    - name: PHP_INI_DIR
-      value: /usr/local/etc/php
     - name: WORDPRESS_DB_PASSWORD
       value: redhat
-    - name: PHP_EXTRA_BUILD_DEPS
-      value: apache2-dev
-    - name: PHPIZE_DEPS
-      value: "autoconf \t\tdpkg-dev \t\tfile \t\tg++ \t\tgcc \t\tlibc-dev \t\tmake \t\tpkg-config \t\tre2c"
-    - name: PHP_SHA256
-      value: 8e078cd7d2f49ac3fcff902490a5bb1addc885e7e3b0d8dd068f42c68297bde8
-    - name: PHP_CPPFLAGS
-      value: -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
-    - name: GPG_KEYS
-      value: 42670A7FE4D0441C8E4632349E4FDC074A4EF02D 5A52880781F755608BF815FC910DEB46F53EA312
-    - name: container
-      value: podman
-    - name: PHP_VERSION
-      value: 7.4.22
-    - name: HOSTNAME
-      value: demo-pod
     image: docker.io/library/wordpress:latest
     name: demo-web
     resources: {}
@@ -110,10 +60,5 @@ spec:
       seLinuxOptions: {}
     workingDir: /var/www/html
 status: {}
----
-metadata:
-  creationTimestamp: null
-spec: {}
-status:
-  loadBalancer: {}
+
 
